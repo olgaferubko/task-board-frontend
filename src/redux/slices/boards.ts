@@ -62,6 +62,7 @@ const boardsSlice = createSlice({
         state.status = "succeeded";
       })
       .addCase(fetchBoardById.rejected, (state) => {
+        state.activeBoard = null;
         state.status = "failed";
         state.error = "Board not found";
       })

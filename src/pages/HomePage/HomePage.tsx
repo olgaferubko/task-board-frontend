@@ -27,13 +27,17 @@ export default function HomePage() {
     dispatch(fetchCards(lastBoardId));
   }, [lastBoardId, dispatch]);
 
-    const handleLoad = async () => {
-      if (!boardIdInput.trim()) return;
+  const handleLoad = async () => {
+    if (!boardIdInput.trim()) return;
 
+    try {
       const board = await dispatch(fetchBoardById(boardIdInput)).unwrap();
-      dispatch(registerBoard(board._id)); 
+      dispatch(registerBoard(board._id));
       await dispatch(fetchCards(board._id));
-    };
+    } catch {
+      setBoardIdInput(boardIdInput);
+    }
+  };
 
   const handleCreateBoard = async (name: string) => {
     try {
