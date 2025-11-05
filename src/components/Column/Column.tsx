@@ -25,8 +25,7 @@ const emptyMessages: Record<string, string> = {
   "done": "Nothing completed yet"
 };
 
-export default function Column({ title, status, cards }: Omit<ColumnProps, "boardId">)
- {
+export default function Column({ title, status, cards, boardId: _boardId }: ColumnProps) {
   const [showAddModal, setShowAddModal] = useState(false);
   const [editingCard, setEditingCard] = useState<any | null>(null);
   const dispatch = useAppDispatch();
