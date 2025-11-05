@@ -44,12 +44,12 @@
     border-radius: 4px;
     box-shadow: 2px 2px 0 #000;
     transition: 0.05s;
+    color: black;
 }
 
 .loadBtn:hover,
 .createBtn:hover {
     background: #f3f3f3;
-    color: black;
 }
 
 .stateText {
