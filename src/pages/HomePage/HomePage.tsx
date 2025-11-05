@@ -20,12 +20,24 @@ export default function HomePage() {
   );
 
   useEffect(() => {
-    if (!lastBoardId) return;           
+    if (!lastBoardId) return;
 
-    setBoardIdInput(lastBoardId);      
+    setBoardIdInput(lastBoardId);
     dispatch(fetchBoardById(lastBoardId));
     dispatch(fetchCards(lastBoardId));
   }, [lastBoardId, dispatch]);
+
+  useEffect(() => {
+    if (showCreateModal) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [showCreateModal]);
 
   const handleLoad = async () => {
     if (!boardIdInput.trim()) return;
@@ -54,45 +66,42 @@ export default function HomePage() {
     }
   };
 
-return (
-  <div className={s.wrapper}>
-    <div className={s.container}>
-      <div className={s.top}>
-        <input
-          className={s.input}
-          placeholder="Enter a board ID here..."
-          value={boardIdInput}
-          onChange={(e) => setBoardIdInput(e.target.value)}
-        />
+  return (
+    <div className={s.wrapper}>
+      <div className={s.container}>
+        <div className={s.top}>
+          <input
+            className={s.input}
+            placeholder="Enter a board ID here..."
+            value={boardIdInput}
+            onChange={(e) => setBoardIdInput(e.target.value)}
+          />
 
-        <button className={s.loadBtn} onClick={handleLoad}>
-          Load
-        </button>
+          <button className={s.loadBtn} onClick={handleLoad}>
+            Load
+          </button>
 
-        <button
-          className={s.createBtn}
-          onClick={() => setShowCreateModal(true)}
-        >
-          New board
-        </button>
+          <button className={s.createBtn} onClick={() => setShowCreateModal(true)}>
+            New board
+          </button>
+        </div>
+
+        {status === "loading" && <p className={s.stateText}>Loading...</p>}
+        {error && <p className={s.error}>{error}</p>}
+
+        {activeBoard ? (
+          <Board boardId={activeBoard._id} />
+        ) : (
+          <p className={s.stateText}>Enter a board ID or create a new one</p>
+        )}
+
+        {showCreateModal && (
+          <CreateBoardModal
+            onConfirm={handleCreateBoard}
+            onClose={() => setShowCreateModal(false)}
+          />
+        )}
       </div>
-
-      {status === "loading" && <p className={s.stateText}>Loading...</p>}
-      {error && <p className={s.error}>{error}</p>}
-
-      {activeBoard ? (
-        <Board boardId={activeBoard._id} />
-      ) : (
-        <p className={s.stateText}>Enter a board ID or create a new one</p>
-      )}
-
-      {showCreateModal && (
-        <CreateBoardModal
-          onConfirm={handleCreateBoard}
-          onClose={() => setShowCreateModal(false)}
-        />
-      )}
     </div>
-  </div>
-);
+  );
 }

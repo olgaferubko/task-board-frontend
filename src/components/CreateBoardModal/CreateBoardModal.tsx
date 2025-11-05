@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import s from "./CreateBoardModal.module.css";
 
 interface Props {
@@ -9,6 +9,13 @@ interface Props {
 export default function CreateBoardModal({ onConfirm, onClose }: Props) {
   const [boardName, setBoardName] = useState("");
   const [isCreating, setIsCreating] = useState(false);
+
+  useEffect(() => {
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, []);
 
   const handleConfirm = async () => {
     if (!boardName.trim()) return;
@@ -41,6 +48,7 @@ export default function CreateBoardModal({ onConfirm, onClose }: Props) {
           >
             Cancel
           </button>
+
           <button
             onClick={handleConfirm}
             className={s.confirmBtn}
@@ -48,8 +56,6 @@ export default function CreateBoardModal({ onConfirm, onClose }: Props) {
           >
             {isCreating ? "Creating..." : "Create"}
           </button>
-
-
         </div>
       </div>
     </div>
