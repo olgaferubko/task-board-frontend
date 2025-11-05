@@ -32,7 +32,7 @@ export default function EditCardModal({ card, onClose }: EditCardModalProps) {
 
       toast.success("Card updated successfully");
       onClose();
-    } catch (err) {
+    } catch {
       toast.error("Failed to update card");
     } finally {
       setIsSaving(false);
