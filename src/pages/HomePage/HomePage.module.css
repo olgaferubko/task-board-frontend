@@ -49,6 +49,7 @@
 .loadBtn:hover,
 .createBtn:hover {
     background: #f3f3f3;
+    color: black;
 }
 
 .stateText {

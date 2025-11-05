@@ -47,12 +47,16 @@ export default function Board({ boardId }: Props) {
     <>
       <h1 className={s.boardTitle}>{boardTitle}</h1>
       <DragDropContext onDragEnd={handleDragEnd}>
-        <div className={s.board}>
-          <Column title="To Do" status="todo" boardId={boardId} cards={cards.filter(c => c.column === "todo")} />
-          <Column title="In Progress" status="in-progress" boardId={boardId} cards={cards.filter(c => c.column === "in-progress")} />
-          <Column title="Done" status="done" boardId={boardId} cards={cards.filter(c => c.column === "done")} />
+        
+        <div className={s.boardWrapper}>
+          <div className={s.board}>
+            <Column title="To Do" status="todo" boardId={boardId} cards={cards.filter(c => c.column === "todo")} />
+            <Column title="In Progress" status="in-progress" boardId={boardId} cards={cards.filter(c => c.column === "in-progress")} />
+            <Column title="Done" status="done" boardId={boardId} cards={cards.filter(c => c.column === "done")} />
+          </div>
         </div>
-        </DragDropContext>
+
+      </DragDropContext>
     </>
   );
 }

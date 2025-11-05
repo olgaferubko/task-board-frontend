@@ -25,6 +25,8 @@
     color: #555;
     margin-top: 4px;
     white-space: pre-line;
+    overflow-wrap: break-word;
+    word-break: break-word;
 }
 
 .actions {
