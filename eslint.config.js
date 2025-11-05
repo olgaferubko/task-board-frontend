@@ -9,33 +9,45 @@ export default [
   js.configs.recommended,
   {
     files: ["**/*.{ts,tsx}"],
+    ignores: ["dist", "build", "node_modules"],
     languageOptions: {
       parser: tsParser,
       parserOptions: {
         ecmaVersion: "latest",
         sourceType: "module",
-        jsx: true
+        jsx: true,
+        project: "./tsconfig.json",
       },
       globals: {
-        React: "readonly"
-      }
+        React: "readonly",
+        document: "readonly",
+        window: "readonly",
+        console: "readonly",
+      },
     },
     plugins: {
       "@typescript-eslint": tsPlugin,
-      "react": react,
+      react,
       "react-hooks": reactHooks,
-      "react-refresh": reactRefresh
+      "react-refresh": reactRefresh,
     },
     rules: {
-      "@typescript-eslint/no-unused-vars": "warn",
+      ...tsPlugin.configs.recommended.rules,
+      "@typescript-eslint/no-unused-vars": ["warn", { argsIgnorePattern: "^_" }],
+      "@typescript-eslint/explicit-function-return-type": "off",
+      "@typescript-eslint/no-explicit-any": "off",
+      "react/react-in-jsx-scope": "off",
       "react-hooks/rules-of-hooks": "error",
       "react-hooks/exhaustive-deps": "warn",
-      "react-refresh/only-export-components": ["warn", { allowConstantExport: true }]
+      "react-refresh/only-export-components": [
+        "warn",
+        { allowConstantExport: true },
+      ],
     },
     settings: {
       react: {
-        version: "detect"
-      }
-    }
-  }
+        version: "detect",
+      },
+    },
+  },
 ];

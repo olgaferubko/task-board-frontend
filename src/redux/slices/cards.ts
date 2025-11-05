@@ -88,7 +88,7 @@ const cardsSlice = createSlice({
     },
 
     optimisticMove(state, action) {
-      const { cardId, fromColumn, toColumn, newIndex, boardId } = action.payload;
+      const { cardId, toColumn, newIndex, boardId } = action.payload;
 
       const cards = state.byBoard[boardId] || [];
       const card = cards.find(c => c._id === cardId);
