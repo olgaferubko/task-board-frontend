@@ -1,0 +1,106 @@
+.wrapper {
+    max-width: 1200px;
+    margin: 0 auto;
+    width: 100%;
+    padding: 20px;
+}
+
+.container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+}
+
+.top {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 25px;
+    align-items: center;
+}
+
+.input {
+    flex: 1;
+    padding: 12px;
+    font-family: "Inter", sans-serif;
+    font-size: 16px;
+    outline: none;
+    width: 450px;
+    border: 2px solid #000;
+    background: #fff;
+    border-radius: 4px;
+    box-shadow: 2px 2px 0 #000;
+}
+
+.loadBtn,
+.createBtn {
+    font-family: "Inter", sans-serif;
+    padding: 12px 20px;
+    background: #fff;
+    cursor: pointer;
+    font-size: 16px;
+    border: 2px solid #000;
+    border-radius: 4px;
+    box-shadow: 2px 2px 0 #000;
+    transition: 0.05s;
+}
+
+.loadBtn:hover,
+.createBtn:hover {
+    background: #f3f3f3;
+}
+
+.stateText {
+    font-family: "Inter", sans-serif;
+    font-size: 18px;
+    opacity: 0.6;
+    text-align: center;
+}
+
+.error {
+    color: red;
+    margin-top: 8px;
+    text-align: center;
+    margin-bottom: 8px;
+}
+
+.modalBackdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal {
+    background: #fff;
+    padding: 20px 30px;
+    border-radius: 6px;
+    border: 1px solid black;
+}
+
+.modalActions {
+    margin-top: 15px;
+    display: flex;
+    gap: 10px;
+}
+
+
+@media (max-width: 768px) {
+    .top {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 10px;
+    }
+
+    .input {
+        width: 100%;
+    }
+
+    .loadBtn,
+    .createBtn {
+        width: 100%;
+    }
+}

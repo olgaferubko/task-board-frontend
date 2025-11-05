@@ -1,0 +1,40 @@
+.column {
+    width: 280px;
+    flex-shrink: 0;
+    background: #fff;
+    border-radius: 8px;
+    padding: 16px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+}
+
+.heading {
+    margin-bottom: 12px;
+    font-family: "Inter", sans-serif;
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.empty {
+    color: #9aa0a6;
+    font-family: "Inter", sans-serif;
+    font-size: 14px;
+    font-style: italic;
+    margin-top: 12px;
+    opacity: 0.8;
+    margin-bottom: 10px;
+}
+
+.addBtn {
+    width: 100%;
+    background: white;
+    border: 2px dashed #222;
+    font-size: 26px;
+    padding: 12px;
+    cursor: pointer;
+    border-radius: 6px;
+    transition: 0.15s;
+}
+
+.addBtn:hover {
+    background: #f6f6f6;
+}

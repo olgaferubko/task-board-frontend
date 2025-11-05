@@ -1,0 +1,30 @@
+.boardTitle {
+    font-family: "Inter", sans-serif;
+    text-align: center;
+    font-size: 26px;
+    font-weight: 600;
+    color: #1d1d1f;
+    margin-top: 10px;
+}
+
+.board {
+    display: flex;
+    gap: 20px;
+    padding: 20px 0;
+
+    overflow-x: auto;
+    white-space: nowrap;
+    scroll-snap-type: x mandatory;
+
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.board::-webkit-scrollbar {
+    height: 6px;
+}
+
+.board::-webkit-scrollbar-thumb {
+    background: #bfbfbf;
+    border-radius: 4px;
+}

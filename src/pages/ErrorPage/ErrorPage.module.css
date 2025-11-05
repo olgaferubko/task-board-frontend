@@ -1,0 +1,21 @@
+.wrapper {
+    text-align: center;
+    padding: 40px;
+}
+
+.title {
+    margin-bottom: 16px;
+    font-size: 24px;
+    font-weight: 600;
+}
+
+.link {
+    color: black;
+    text-decoration: underline;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.link:hover {
+    color: #3c3c41;
+}

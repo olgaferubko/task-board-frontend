@@ -1,12 +1,19 @@
-import { useState } from 'react'
-import './App.css'
+import { Suspense, lazy } from "react";
+import { Routes, Route } from "react-router-dom";
+import Loader from "./components/Loader/Loader";
 
-function App() {
-  const [count, setCount] = useState(0)
+const HomePage = lazy(() => import("./pages/HomePage/HomePage"));
+const ErrorPage = lazy(() => import("./pages/ErrorPage/ErrorPage"));
 
+export default function App() {
   return (
-    <div>Hello</div>
-  )
+    <main>
+      <Suspense fallback={<Loader />}>
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="*" element={<ErrorPage />} />
+        </Routes>
+      </Suspense>
+    </main>
+  );
 }
-
-export default App
