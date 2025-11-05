@@ -9,12 +9,14 @@ export interface Board {
 
 export interface BoardsState {
   activeBoard: Board | null;
+  lastBoardId: string | null; 
   status: "idle" | "loading" | "succeeded" | "failed";
   error: string | null;
 }
 
 const initialState: BoardsState = {
   activeBoard: null,
+  lastBoardId: null,
   status: "idle",
   error: null,
 };
@@ -44,6 +46,9 @@ const boardsSlice = createSlice({
       state.status = "idle";
       state.error = null;
     },
+    registerBoard(state, action) {
+      state.lastBoardId = action.payload;
+    }
   },
   extraReducers: (builder) => {
     builder
@@ -52,8 +57,9 @@ const boardsSlice = createSlice({
         state.error = null;
       })
       .addCase(fetchBoardById.fulfilled, (state, action) => {
-        state.status = "succeeded";
         state.activeBoard = action.payload;
+        state.lastBoardId = action.payload._id;
+        state.status = "succeeded";
       })
       .addCase(fetchBoardById.rejected, (state) => {
         state.status = "failed";
@@ -61,9 +67,10 @@ const boardsSlice = createSlice({
       })
       .addCase(createBoard.fulfilled, (state, action) => {
         state.activeBoard = action.payload;
+        state.lastBoardId = action.payload._id;
       });
   },
 });
 
-export const { clearActiveBoard } = boardsSlice.actions;
+export const { clearActiveBoard, registerBoard } = boardsSlice.actions;
 export const boardsReducer = boardsSlice.reducer;

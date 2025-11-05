@@ -1,8 +1,8 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import s from "./HomePage.module.css";
 
-import { fetchBoardById, createBoard, clearActiveBoard } from "../../redux/slices/boards";
+import { fetchBoardById, createBoard } from "../../redux/slices/boards";
 import { fetchCards, registerBoard } from "../../redux/slices/cards";
 
 import { RootState } from "../../redux/store";
@@ -15,77 +15,80 @@ export default function HomePage() {
   const [boardIdInput, setBoardIdInput] = useState("");
   const [showCreateModal, setShowCreateModal] = useState(false);
 
-  const { activeBoard, status, error } = useSelector(
+  const { activeBoard, status, error, lastBoardId } = useSelector(
     (state: RootState) => state.boards
   );
 
-const handleLoad = async () => {
-  if (!boardIdInput.trim()) return;
+  useEffect(() => {
+    if (!lastBoardId) return;           
 
-  const board = await dispatch(fetchBoardById(boardIdInput)).unwrap();
+    setBoardIdInput(lastBoardId);      
+    dispatch(fetchBoardById(lastBoardId));
+    dispatch(fetchCards(lastBoardId));
+  }, [lastBoardId, dispatch]);
 
-  dispatch(registerBoard(board._id)); 
-  await dispatch(fetchCards(board._id));
-};
+    const handleLoad = async () => {
+      if (!boardIdInput.trim()) return;
 
-const handleCreateBoard = async (name: string) => {
-  try {
-    dispatch(clearActiveBoard());
-    setBoardIdInput("");
+      const board = await dispatch(fetchBoardById(boardIdInput)).unwrap();
+      dispatch(registerBoard(board._id)); 
+      await dispatch(fetchCards(board._id));
+    };
 
-    const created = await dispatch(createBoard(name)).unwrap();
+  const handleCreateBoard = async (name: string) => {
+    try {
+      const created = await dispatch(createBoard(name)).unwrap();
 
-    setBoardIdInput(created._id);        
-    setShowCreateModal(false);
+      dispatch(registerBoard(created._id));
+      setBoardIdInput(created._id);
+      setShowCreateModal(false);
 
-    await dispatch(fetchBoardById(created._id));
-    await dispatch(fetchCards(created._id));
-  } catch (err) {
-    console.error("Failed to create board:", err);
-  }
-};
-  
-  return (
-    <div className={s.wrapper}>
-      <div className={s.container}>
-        <div className={s.top}>
-          <input
-            className={s.input}
-            placeholder="Enter a board ID here..."
-            value={boardIdInput}
-            onChange={(e) => setBoardIdInput(e.target.value)}
-          />
-          <button className={s.loadBtn} onClick={handleLoad}>
-            Load
-          </button>
-          <button
-            className={s.createBtn}
-            onClick={() => {
-              dispatch(clearActiveBoard());
-              setBoardIdInput("");
-              setShowCreateModal(true);
-            }}
-          >
-            New board
-          </button>
-        </div>
+      await dispatch(fetchBoardById(created._id));
+      await dispatch(fetchCards(created._id));
+    } catch (err) {
+      console.error("Failed to create board:", err);
+    }
+  };
 
-        {status === "loading" && <p className={s.stateText}>Loading...</p>}
-        {error && <p className={s.error}>{error}</p>}
+return (
+  <div className={s.wrapper}>
+    <div className={s.container}>
+      <div className={s.top}>
+        <input
+          className={s.input}
+          placeholder="Enter a board ID here..."
+          value={boardIdInput}
+          onChange={(e) => setBoardIdInput(e.target.value)}
+        />
 
-        {activeBoard ? (
-          <Board boardId={activeBoard._id} />
-        ) : (
-          <p className={s.stateText}>Enter a board ID or create a new one</p>
-        )}
+        <button className={s.loadBtn} onClick={handleLoad}>
+          Load
+        </button>
 
-        {showCreateModal && (
-          <CreateBoardModal
-            onConfirm={handleCreateBoard}
-            onClose={() => setShowCreateModal(false)}
-          />
-        )}
+        <button
+          className={s.createBtn}
+          onClick={() => setShowCreateModal(true)}
+        >
+          New board
+        </button>
       </div>
+
+      {status === "loading" && <p className={s.stateText}>Loading...</p>}
+      {error && <p className={s.error}>{error}</p>}
+
+      {activeBoard ? (
+        <Board boardId={activeBoard._id} />
+      ) : (
+        <p className={s.stateText}>Enter a board ID or create a new one</p>
+      )}
+
+      {showCreateModal && (
+        <CreateBoardModal
+          onConfirm={handleCreateBoard}
+          onClose={() => setShowCreateModal(false)}
+        />
+      )}
     </div>
-  );
+  </div>
+);
 }
