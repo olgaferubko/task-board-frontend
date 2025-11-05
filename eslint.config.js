@@ -9,7 +9,8 @@ export default [
   js.configs.recommended,
   {
     files: ["**/*.{ts,tsx}"],
-    ignores: ["dist", "build", "node_modules"],
+    ignores: ["dist", "build", "node_modules", "vite.config.ts"],
+
     languageOptions: {
       parser: tsParser,
       parserOptions: {
