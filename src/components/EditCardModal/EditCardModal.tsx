@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import s from "./EditCardModal.module.css";
 import { useDispatch } from "react-redux";
 import { updateCard } from "../../redux/slices/cards";
@@ -19,12 +19,7 @@ export default function EditCardModal({ card, onClose }: EditCardModalProps) {
   const [description, setDescription] = useState(card.description);
   const [isSaving, setIsSaving] = useState(false);
 
-  useEffect(() => {
-    document.body.style.overflow = "hidden";
-    return () => {
-      document.body.style.overflow = "";
-    };
-  }, []);
+
 
   const handleSave = async () => {
     try {

@@ -27,17 +27,6 @@ export default function HomePage() {
     dispatch(fetchCards(lastBoardId));
   }, [lastBoardId, dispatch]);
 
-  useEffect(() => {
-    if (showCreateModal) {
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "";
-    }
-
-    return () => {
-      document.body.style.overflow = "";
-    };
-  }, [showCreateModal]);
 
   const handleLoad = async () => {
     if (!boardIdInput.trim()) return;

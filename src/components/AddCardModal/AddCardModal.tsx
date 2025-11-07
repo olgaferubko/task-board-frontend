@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import s from "./AddCardModal.module.css";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../../redux/store";
@@ -16,12 +16,6 @@ export default function AddCardModal({ column, onClose }: AddCardModalProps) {
   const dispatch = useDispatch<any>();
   const boardId = useSelector((s: RootState) => s.boards.activeBoard?._id);
 
-  useEffect(() => {
-    document.body.style.overflow = "hidden";
-    return () => {
-      document.body.style.overflow = "";
-    };
-  }, []);
 
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
